@@ -36,6 +36,9 @@ fetch("http://localhost:3000/api/products")
       img.alt = data[product].altTxt;
       titre.innerHTML = data[product].name;
       description.innerHTML = data[product].description;
+
+      // ajout du lien pour recupérer le produit 
+
       lien.href = `product.html?id=${data[product]._id}`;
     }
   });
