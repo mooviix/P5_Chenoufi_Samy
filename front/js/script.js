@@ -6,7 +6,7 @@ fetch("http://localhost:3000/api/products")
   })
   .then(function(data) {
     console.log(data);
-    for (let product in data){
+    for (let product in data){   // <===== pourquoi in fonctionne et pas of
 
       // déclaration des variables pour index.html
 
