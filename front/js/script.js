@@ -6,7 +6,7 @@ fetch("http://localhost:3000/api/products")
   })
   .then(function(data) {
     console.log(data);
-    for (let product in data){   // <===== pourquoi in fonctionne et pas of
+    for (let product in data){   // <===== pourquoi in fonctionne et pas of ?
 
       // déclaration des variables pour index.html
 
@@ -34,8 +34,8 @@ fetch("http://localhost:3000/api/products")
 
       img.src = data[product].imageUrl;
       img.alt = data[product].altTxt;
-      titre.innerHTML = data[product].name;
-      description.innerHTML = data[product].description;
+      titre.textContent = data[product].name;
+      description.textContent = data[product].description;
 
       // ajout du lien pour recupérer le produit 
 
