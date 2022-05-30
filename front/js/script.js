@@ -17,7 +17,7 @@ fetch("http://localhost:3000/api/products")
       let titre = document.createElement("h3");
       let description = document.createElement("p");
 
-      // création des class pour index.html
+      // initialisation des class pour index.html
 
       titre.classList.add("productName");
       description.classList.add("productDescription");

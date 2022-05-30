@@ -9,7 +9,7 @@ let titre = document.getElementById("title");
 let prix = document.getElementById("price");
 let description = document.getElementById("description");
 const choix = document.getElementById("colors");
-const addToCard = document.querySelector("#addToCart");  // <==== Pourquoi on n'est pas obligé d'aller chercher addToCard? 
+const addToCard = document.querySelector("#addToCart"); 
 const quantity = document.querySelector("#quantity");
 
 
@@ -50,7 +50,7 @@ addToCard.onclick = () => {
 
             let produitPanier = JSON.parse(localStorage.getItem("produits"));
 
-            let same = produitPanier.findIndex(produit => produit.id == id && produit.color == choix.value);  // same = produit + couleur déja existante
+            let same = produitPanier.findIndex(produit => produit.id == id && produit.color == choix.value);  // same = produit + couleur non existante
 
             if (same !== -1){
                 fetchProductById(id)
@@ -62,14 +62,14 @@ addToCard.onclick = () => {
                         
                         let ajoutPanier = {
                             name: data.name,
-                            color: data.colors,
+                            color: choix.value,
                             prix: data.price,
                             id: data._id,
                             quantity: parseInt(data.quantity),                      
                         };
 
                         produitPanier.splice(same, 1 , ajoutPanier); 
-                        localStorage.setItem("produits", JSON.stringify(ajoutPanier));
+                        localStorage.setItem("produits", JSON.stringify(produitPanier));
                         console.log("articleEnPlus")
                     })
             } else {
@@ -80,7 +80,7 @@ addToCard.onclick = () => {
 
                     let ajoutPanier = {
                         name: produits.name,
-                        price: produits.price,
+                        prix: produits.price,
                         color: choix.value,
                         quantity: parseInt(quantity.value),
                         id: produits._id,
@@ -97,26 +97,27 @@ addToCard.onclick = () => {
         } else {
             fetchProductById(id)
 
-                .then((data) => {
+            .then((data) => {
 
-                    let ajoutPanier = {
-                        name: data.name,
-                        color: choix.value,
-                        prix: data.price,
-                        id: data._id,
-                        quantity: parseInt(quantity.value),                      
-                    };
+                let ajoutPanier = {
+                    name: data.name,
+                    color: choix.value,
+                    prix: data.price,
+                    id: data._id,
+                    quantity: parseInt(quantity.value),                      
+                };
 
                     let produitPanier = []; // création tableau
 
-                    produitPanier.push(ajoutPanier); // ajout de la liste dans le panier
-                    localStorage.setItem("produits", JSON.stringify(ajoutPanier)); //
-                    console.log("ajoutPanier");
-                })
+                produitPanier.push(ajoutPanier); // ajout de la liste dans le panier
+                localStorage.setItem("produits", JSON.stringify(produitPanier)); //
+                console.log("ajoutPanier");
+            })
 
             
-        } 
-
-        
+        }  
+    }else{
+        alert("Champs incorrect")
     }
 }
+
