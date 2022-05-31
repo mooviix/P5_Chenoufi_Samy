@@ -28,7 +28,7 @@ async function byId(id){
         description.textContent = reponse.description;
         let colors = reponse.colors;
 
-        for (let color of colors){   // <====  pourquoi of fonctionne et pas in ?
+        for (let color of colors){   
             let option = document.createElement("option"); // création de l'élément
             choix.appendChild(option);  // placement de l'élément
             option.textContent = color;     // ajout du contenue dans l'élément
@@ -70,7 +70,8 @@ addToCard.onclick = () => {
 
                         produitPanier.splice(same, 1 , ajoutPanier); 
                         localStorage.setItem("produits", JSON.stringify(produitPanier));
-                        console.log("articleEnPlus")
+                        console.log("articleEnPlus");
+                        window.location.href = 'cart.html';
                     })
             } else {
                 fetchProductById(id)
@@ -89,6 +90,7 @@ addToCard.onclick = () => {
                     produitPanier.push(ajoutPanier);
                     localStorage.setItem("produits", JSON.stringify(produitPanier));
                     console.log('Nouveau article ajouté au panier');
+                    window.location.href = 'cart.html';
                 }); 
             }
 
@@ -112,6 +114,7 @@ addToCard.onclick = () => {
                 produitPanier.push(ajoutPanier); // ajout de la liste dans le panier
                 localStorage.setItem("produits", JSON.stringify(produitPanier)); //
                 console.log("ajoutPanier");
+                window.location.href = 'cart.html';
             })
 
             

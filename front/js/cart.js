@@ -1,4 +1,5 @@
 import {fetchProductById} from "./fetcher.js";
+import { calculPrix, calculQuantity } from "./calcul.js";
 
 // Vérification du localStorage
 
@@ -10,10 +11,10 @@ if (localStorage.getItem("produits") != null){
         fetchProductById(produitPanier[produit].id)
    
         .then((data) => {
-
+            console.log(data)
             // Déclaration des Constantes !
 
-            const template = document.querySelector("#cart_items");
+            const template = document.querySelector("#cart__items");
             const article = document.createElement("article");
             const image = document.createElement("img");
             const nomProduit = document.createElement("h2");
@@ -29,9 +30,9 @@ if (localStorage.getItem("produits") != null){
             const div5 = document.createElement("div");
             const div6 = document.createElement("div");
 
-            // initialisation des class pour Cart.html 
+            // initialisation des class 
 
-            article.classList.add("cart_item");
+            article.classList.add("cart__item");
             div1.classList.add("cart__item__img");
             div2.classList.add("cart__item__content");
             div3.classList.add("cart__item__content__description");
@@ -41,33 +42,45 @@ if (localStorage.getItem("produits") != null){
             supp.classList.add("deleteItem");
             input.classList.add("itemQuantity");
             input.setAttribute("type", "number");
-            input.setAttribute("name", )
-            article.setAttribute("data.id", produitPanier[produit].id)
-            article.setAttribute("data.color", produitPanier[produit].color)
-            
+            input.setAttribute("min","1");
+            input.setAttribute("max","100");
+            input.setAttribute("value", produitPanier[produit].quantity);
+            article.setAttribute("data.id", produitPanier[produit].id);
+            article.setAttribute("data.color", produitPanier[produit].color);
+
+            // ajout des enfants 
+
+            template.appendChild(article);
+            article.appendChild(div1);
+            article.appendChild(div2);
+            div1.appendChild(image);
+            div2.appendChild(div3);
+            div2.appendChild(div4);
+            div3.appendChild(nomProduit);
+            div3.appendChild(couleur);
+            div3.appendChild(prix);
+            div4.appendChild(div5);
+            div4.appendChild(div6);
+            div5.appendChild(quantity);
+            div5.appendChild(input);
+            div6.appendChild(supp);
+
+            // ajout du contenu dans l'élément
+
+            image.src = data.imageUrl;
+            image.alt = data.altTxt;
+            nomProduit.textContent = data.name;
+            prix.textContent = data.prix;
+            quantity.textContent = 'quantité : ';
+            couleur.textContent = 'couleur : ' + produitPanier[produit].color;
+            prix.textContent = 'prix : ' + data.price + '€';
+            supp.textContent = 'Supprimer ';
 
 
 
+        }) 
 
-
-
-
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-        })
-
-        
     }
+    calculQuantity(produitPanier);
+    calculPrix(produitPanier);
 }
