@@ -3,6 +3,21 @@ import { calculPrix, calculQuantity } from "./calcul.js";
 
 // Vérification du localStorage
 
+function deleteProduit(event){
+    let produitPanier = JSON.parse(localStorage.getItem("produits"));
+    let target = event.target;
+    let article = target.closest("article");
+    let articleId = (article.getAttribute("data-id"));
+    let articleColor = (article.getAttribute("data-color"));
+
+    produitPanier = produitPanier.filter(tableau => tableau.id !== articleId || tableau.color != articleColor);
+    
+    localStorage.setItem("produits", JSON.stringify(produitPanier));
+    alert("Ce produit a été supprimer du panier");
+    window.location.href = "cart.html";
+}
+
+
 if (localStorage.getItem("produits") != null){
     let produitPanier = JSON.parse(localStorage.getItem("produits"));
 
@@ -22,7 +37,7 @@ if (localStorage.getItem("produits") != null){
             const prix = document.createElement("p");
             const quantity = document.createElement("p");
             const input = document.createElement("input");
-            const supp = document.createElement("p")
+            const supp = document.createElement("p");
             const div1 = document.createElement("div");
             const div2 = document.createElement("div");
             const div3 = document.createElement("div");
@@ -45,8 +60,8 @@ if (localStorage.getItem("produits") != null){
             input.setAttribute("min","1");
             input.setAttribute("max","100");
             input.setAttribute("value", produitPanier[produit].quantity);
-            article.setAttribute("data.id", produitPanier[produit].id);
-            article.setAttribute("data.color", produitPanier[produit].color);
+            article.setAttribute("data-id", produitPanier[produit].id);
+            article.setAttribute("data-color", produitPanier[produit].color);
 
             // ajout des enfants 
 
@@ -77,10 +92,26 @@ if (localStorage.getItem("produits") != null){
             supp.textContent = 'Supprimer ';
 
 
+            supp.addEventListener("click" , (event) =>{
+                deleteProduit(event);
+            })
+
+
+
 
         }) 
+
+
+
+
 
     }
     calculQuantity(produitPanier);
     calculPrix(produitPanier);
 }
+
+
+
+
+
+

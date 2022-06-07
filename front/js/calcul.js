@@ -31,7 +31,7 @@ export function calculPrix (produitPanier){
         
 
     }
-    console.log(prixTableau);
+    
     prixTableau = prixTableau.map((x) => parseInt(x));
     const reducer = (previousValue, currentValue) => previousValue + currentValue;
     prixTableau = prixTableau.reduce(reducer);
