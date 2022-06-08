@@ -49,7 +49,7 @@ addToCard.onclick = () => {
         if (localStorage.getItem("produits") !== null){
 
             let produitPanier = JSON.parse(localStorage.getItem("produits"));
-
+            console.log(produitPanier);
             let same = produitPanier.findIndex(produit => produit.id == id && produit.color == choix.value);  // same = produit + couleur non existante
 
             if (same !== -1){
@@ -109,7 +109,7 @@ addToCard.onclick = () => {
                     quantity: parseInt(quantity.value),                      
                 };
 
-                    let produitPanier = []; // création tableau
+                let produitPanier = []; // création tableau
 
                 produitPanier.push(ajoutPanier); // ajout de la liste dans le panier
                 localStorage.setItem("produits", JSON.stringify(produitPanier)); //

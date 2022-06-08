@@ -40,3 +40,24 @@ export function calculPrix (produitPanier){
 
 }
 
+
+export function regexEmail (email){
+    let reg = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$');
+    let testEmail = reg.test(email);
+
+    if(testEmail){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+
+export function productId (produitPanier){
+    let tableauId = [];
+    for (let produit in produitPanier){
+        tableauId.push(produitPanier[produit].id);
+    }
+
+    return tableauId;
+}

@@ -1,7 +1,7 @@
-import {fetchProductById} from "./fetcher.js";
-import { calculPrix, calculQuantity } from "./calcul.js";
+import {fetchProductById, handlePay} from "./fetcher.js";
+import { calculPrix, calculQuantity, productId, regexEmail} from "./calcul.js";
 
-// Vérification du localStorage
+// fonction pour supprimer un article du panier
 
 function deleteProduit(event){
     let produitPanier = JSON.parse(localStorage.getItem("produits"));
@@ -17,16 +17,17 @@ function deleteProduit(event){
     window.location.href = "cart.html";
 }
 
+// Vérification du localStorage
+
 
 if (localStorage.getItem("produits") != null){
     let produitPanier = JSON.parse(localStorage.getItem("produits"));
 
     for (let produit in produitPanier){
-
         fetchProductById(produitPanier[produit].id)
    
         .then((data) => {
-            console.log(data)
+            
             // Déclaration des Constantes !
 
             const template = document.querySelector("#cart__items");
@@ -96,19 +97,104 @@ if (localStorage.getItem("produits") != null){
                 deleteProduit(event);
             })
 
+            // fonction pour changer la quantité dans le panier
 
+            input.addEventListener("change" , () => {
+                let id = article.dataset.id;
+                let color = article.dataset.color;
+                
+                let same = produitPanier.findIndex(produit => produit.id == id && produit.color == color);
 
+                let ajoutPanier = {
+                    name: data.name,
+                    color: color,
+                    prix: data.price,
+                    id: id,
+                    quantity: parseInt(input.value),                      
+                };
+
+                produitPanier.splice(same, 1, ajoutPanier);
+                localStorage.setItem("produits", JSON.stringify(produitPanier));
+                calculQuantity(produitPanier);
+                calculPrix(produitPanier);
+
+            })
 
         }) 
-
-
-
 
 
     }
     calculQuantity(produitPanier);
     calculPrix(produitPanier);
+
+    // formulaire regex
+
+    function confirmation(){
+        const form = document.querySelector(".cart__order__form");
+        const firstName = document.querySelector("#firstName");
+        const errorFirstName = document.querySelector("#firstNameErrorMsg");
+        const LastName = document.querySelector("#lastName");
+        const errorLastName = document.querySelector("#LastNameErrorMsg");
+        const address = document.querySelector("#address");
+        const errorAddress = document.querySelector("#addressErrorMsg");
+        const city = document.querySelector("#city");
+        const errorCity = document.querySelector("#cityErrorMsg");
+        const email = document.querySelector("#email");
+        const errorEmail = document.querySelector("#emailErrorMsg");
+        const order = document.querySelector("#order");
+        
+        
+        
+        // initialisation des regex 
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault()
+            if(!firstName.value){
+                errorFirstName.textContent = "veuillez remplir ce champ";
+            }else if(!LastName.value){
+                errorLastName.textContent = "veuillez remplir ce champ";
+            }else if(!address.value){
+                errorAddress.textContent = "veuillez remplir ce champ";
+            }else if(!city.value){
+                errorCity.textContent = "veuillez remplir ce champ";
+            }else if(!email.value){
+                errorEmail.textContent = "veuillez remplir ce champ";
+            }else if(!regexEmail(email.value)){
+                errorEmail.textContent = "veuillez mettre une adresse mail valide"
+            }else{
+
+                // création des objects
+
+                let order = {
+                    contact: {
+                        firstName: firstName.value,
+                        lastName: LastName.value,
+                        address: address.value,
+                        city: city.value,
+                        email: email.value,
+                    },
+                    products: productId(produitPanier),
+                };
+
+                const option = {
+                    method: "POST",
+                    body: JSON.stringify(order),
+                    headers: {"Content-type": "application/json"},
+                };
+
+                handlePay(option, produitPanier);
+            }   
+        });
+    }
+
+    confirmation();
 }
+
+
+
+
+
+
 
 
 
