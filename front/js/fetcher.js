@@ -14,8 +14,7 @@ export function handlePay(option, produitPanier){
         .then(resp => resp.json())
 
         .then((data) => {
-            localStorage.clear()
-            localStorage.setItem("products", JSON.stringify(productId(produitPanier)));          
+            localStorage.clear()      
             // Importation de l'orderId dans le paramètre de l'url :               
             window.location.href = `confirmation.html?orderId=${data.orderId}`;
             

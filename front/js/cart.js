@@ -160,7 +160,7 @@ if (localStorage.getItem("produits") != null){
             }else if(!email.value){
                 errorEmail.textContent = "veuillez remplir ce champ";
             }else if(!regexEmail(email.value)){
-                errorEmail.textContent = "veuillez mettre une adresse mail valide"
+                errorEmail.textContent = "veuillez mettre une adresse mail valide";
             }else{
 
                 // création des objects
