@@ -5,7 +5,6 @@ fetch("http://localhost:3000/api/products")
     }
   })
   .then(function(data) {
-    console.log(data);
     for (let product in data){  
 
       // déclaration des variables pour index.html

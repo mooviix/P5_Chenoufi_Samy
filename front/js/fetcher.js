@@ -18,7 +18,7 @@ export function handlePay(option, produitPanier){
             localStorage.setItem("products", JSON.stringify(productId(produitPanier)));          
             // Importation de l'orderId dans le paramètre de l'url :               
             window.location.href = `confirmation.html?orderId=${data.orderId}`;
-            console.log(data.orderId);
+            
         });
 
 };
