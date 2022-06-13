@@ -41,6 +41,30 @@ export function calculPrix (produitPanier){
 }
 
 
+export function regexName (name){
+    let regName = new RegExp("^[a-zA-Z ,.'-]+$");
+    let test = regName.test(name);
+
+    if(test){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+
+export function regexAdress (adress){
+    let regAdress = new RegExp("^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+");
+    let testAdress = regAdress.test(adress);
+
+    if(testAdress){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+
 export function regexEmail (email){
     let reg = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$');
     let testEmail = reg.test(email);
