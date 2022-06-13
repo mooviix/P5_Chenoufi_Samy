@@ -1,7 +1,11 @@
 import {fetchProductById} from "./fetcher.js";
 
+// récuprération de l'id dans URL
+
 let url = new URL (document.location);
 let id = url.searchParams.get("id");
+
+// création des variables
 
 let template = document.querySelector(".item__img");
 let img = document.createElement("img");
@@ -12,9 +16,11 @@ const choix = document.getElementById("colors");
 const addToCard = document.querySelector("#addToCart"); 
 const quantity = document.querySelector("#quantity");
 
-
+// placer l'enfant
 
 template.appendChild(img);
+
+// fonction asynchrone pour afficher les produits  
 
 async function byId(id){
     let reponse = await fetchProductById(id);
@@ -52,7 +58,7 @@ addToCard.onclick = () => {
             let same = produitPanier.findIndex(produit => produit.id == id && produit.color == choix.value);  // same = produit + couleur non existante
 
             if (same !== -1){
-                fetchProductById(id)
+                fetchProductById(id) // récupération de la fonction
 
                     .then((data) => {
 

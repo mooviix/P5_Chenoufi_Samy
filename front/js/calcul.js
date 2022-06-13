@@ -1,3 +1,5 @@
+// fonction calcul de la quantité
+
 export function calculQuantity (produitPanier){
     let qtytableau = [0];
     const qtyTotal = document.querySelector('#totalQuantity');
@@ -16,6 +18,8 @@ export function calculQuantity (produitPanier){
 
 }
 
+
+// fonction calcul du prix
 
 export function calculPrix (produitPanier){
 
@@ -40,6 +44,7 @@ export function calculPrix (produitPanier){
 
 }
 
+// fonction regex
 
 export function regexName (name){
     let regName = new RegExp("^[a-zA-Z ,.'-]+$");
@@ -76,6 +81,7 @@ export function regexEmail (email){
     }
 }
 
+// fonction pour envoyer le panier dans un tableau
 
 export function productId (produitPanier){
     let tableauId = [];

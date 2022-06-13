@@ -1,5 +1,6 @@
 import {fetchProductById, handlePay} from "./fetcher.js";
-import { calculPrix, calculQuantity, productId, regexEmail} from "./calcul.js";
+import { calculPrix, calculQuantity, productId, regexAdress, regexEmail, regexName} from "./calcul.js";
+ 
 
 // fonction pour supprimer un article du panier
 
@@ -15,6 +16,7 @@ function deleteProduit(event){
     localStorage.setItem("produits", JSON.stringify(produitPanier));
     alert("Ce produit a été supprimer du panier");
     window.location.href = "cart.html";
+   
 }
 
 // Vérification du localStorage
@@ -92,6 +94,7 @@ if (localStorage.getItem("produits") != null){
             prix.textContent = 'prix : ' + data.price + '€';
             supp.textContent = 'Supprimer ';
 
+            // écoute l'evenement du click sur le bouton supprimer
 
             supp.addEventListener("click" , (event) =>{
                 deleteProduit(event);
@@ -105,7 +108,7 @@ if (localStorage.getItem("produits") != null){
                 
                 let same = produitPanier.findIndex(produit => produit.id == id && produit.color == color);
 
-                let ajoutPanier = {
+                let ajoutPanier = {  
                     name: data.name,
                     color: color,
                     prix: data.price,
@@ -128,7 +131,7 @@ if (localStorage.getItem("produits") != null){
     calculPrix(produitPanier);
 
     // formulaire regex
-
+    // fonction pour le formulaire
     function confirmation(){
         const form = document.querySelector(".cart__order__form");
         const firstName = document.querySelector("#firstName");
@@ -145,38 +148,47 @@ if (localStorage.getItem("produits") != null){
         
         
         
-        // initialisation des regex 
+        // vérification des valeurs et regex
 
         form.addEventListener("submit", (e) => {
             e.preventDefault()
+
             if(!firstName.value){
                 errorFirstName.textContent = "veuillez remplir ce champ";
+            }else if(!regexName(firstName.value)){
+                errorFirstName.textContent = "veuillez entrée un prénom valide";
             }else if(!LastName.value){
                 errorLastName.textContent = "veuillez remplir ce champ";
+            }else if(!regexName(LastName.value)){
+                errorLastName.textContent = "veuillez entrée un nom valide ";
             }else if(!address.value){
                 errorAddress.textContent = "veuillez remplir ce champ";
+            }else if(!regexAdress(address.value)){
+                errorAddress.textContent = "veuillez mettre une adresse valide";
             }else if(!city.value){
                 errorCity.textContent = "veuillez remplir ce champ";
+            }else if(!regexName(city.value)){
+                errorCity.textContent = "veuillez mettre une ville valide";
             }else if(!email.value){
                 errorEmail.textContent = "veuillez remplir ce champ";
             }else if(!regexEmail(email.value)){
                 errorEmail.textContent = "veuillez mettre une adresse mail valide";
             }else{
 
-                // création des objects
+                // création de l'objet order
 
-                let order = {
-                    contact: {
+                let order = {   
+                    contact: {  // récupération du contact
                         firstName: firstName.value,
                         lastName: LastName.value,
                         address: address.value,
                         city: city.value,
                         email: email.value,
                     },
-                    products: productId(produitPanier),
+                    products: productId(produitPanier), // récupération panier
                 };
 
-                const option = {
+                const option = {  // requete POST
                     method: "POST",
                     body: JSON.stringify(order),
                     headers: {"Content-type": "application/json"},
@@ -188,11 +200,31 @@ if (localStorage.getItem("produits") != null){
     }
 
     confirmation();
-}
+   
+}else{
+
+    // affichage "votre Panier est vide"
+    let h1 = document.querySelector("#cartAndFormContainer");
+    let texte = h1.children;
+    let tableauSelector = texte[0];
+    tableauSelector.textContent = "Votre panier est vide";
+} 
 
 
 
 
+
+
+
+
+
+   
+
+
+   
+        
+    
+    
 
 
 
