@@ -31,7 +31,6 @@ export async function calculPrix (produitPanier){
     for (let produit in produitPanier){
         
         let productObj = await fetchProductById(produitPanier[produit].id);
-        console.log(productObj);
         let prixProduit = productObj.price;
         let qtyProduit = produitPanier[produit].quantity;
         let total =  parseInt(prixProduit) * parseInt(qtyProduit);
