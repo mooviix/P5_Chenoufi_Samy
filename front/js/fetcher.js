@@ -1,5 +1,3 @@
-import { productId } from "./calcul.js";
-
 const url = "http://localhost:3000/api/products/";
 const urlOrder = 'http://localhost:3000/api/products/order';
 

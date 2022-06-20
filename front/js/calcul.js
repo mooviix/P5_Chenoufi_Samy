@@ -1,3 +1,5 @@
+import {fetchProductById} from "./fetcher.js";
+
 // fonction calcul de la quantité
 
 export function calculQuantity (produitPanier){
@@ -21,14 +23,16 @@ export function calculQuantity (produitPanier){
 
 // fonction calcul du prix
 
-export function calculPrix (produitPanier){
+export async function calculPrix (produitPanier){
 
     let prixTableau = [0];
     const prixTotal = document.querySelector('#totalPrice');
 
     for (let produit in produitPanier){
         
-        let prixProduit = produitPanier[produit].prix;
+        let productObj = await fetchProductById(produitPanier[produit].id);
+        console.log(productObj);
+        let prixProduit = productObj.price;
         let qtyProduit = produitPanier[produit].quantity;
         let total =  parseInt(prixProduit) * parseInt(qtyProduit);
         prixTableau.push(total);

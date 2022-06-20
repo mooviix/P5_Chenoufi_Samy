@@ -15,7 +15,7 @@ function deleteProduit(event){
     
     localStorage.setItem("produits", JSON.stringify(produitPanier));
     alert("Ce produit a été supprimer du panier");
-    window.location.href = "cart.html";
+    article.remove();
    
 }
 
