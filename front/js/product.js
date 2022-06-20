@@ -85,7 +85,6 @@ addToCard.onclick = () => {
 
                     let ajoutPanier = {
                         name: produits.name,
-                        prix: produits.price,
                         color: choix.value,
                         quantity: parseInt(quantity.value),
                         id: produits._id,
